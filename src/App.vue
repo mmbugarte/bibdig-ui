@@ -1,30 +1,56 @@
+<script setup lang="ts">
+import { defineProps } from "vue";
+
+const books = [
+  {
+    id: 1,
+    title: "El jardín de senderos que se bifurcan",
+    author: "Jorge Luis Borges",
+    year: 1941,
+    image: "https://via.placeholder.com/150",
+    downloadUrl: "https://example.com/book1.pdf",
+  },
+  {
+    id: 2,
+    title: "1984",
+    author: "George Orwell",
+    year: 1949,
+    image: "https://via.placeholder.com/150",
+    downloadUrl: "https://example.com/book2.pdf",
+  },
+  {
+    id: 3,
+    title: "Cien años de soledad",
+    author: "Gabriel García Márquez",
+    year: 1967,
+    image: "https://via.placeholder.com/150",
+    downloadUrl: "https://example.com/book3.pdf",
+  },
+  // Agrega más libros ficticios aquí
+];
+</script>
+
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view />
+  <div class="container mt-4">
+    <h1>Listado de Libros</h1>
+    <div class="row">
+      <div class="col-lg-4 col-md-6" v-for="book in books" :key="book.id">
+        <div class="card mb-4">
+          <img :src="book.image" class="card-img-top" alt="Portada del libro" />
+          <div class="card-body">
+            <h5 class="card-title">{{ book.title }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{ book.author }}</h6>
+            <p class="card-text">Año: {{ book.year }}</p>
+            <a
+              :href="book.downloadUrl"
+              class="btn btn-primary"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Descargar</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
-
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-</style>
