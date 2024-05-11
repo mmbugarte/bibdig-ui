@@ -16,6 +16,7 @@ const fetchData = async () => {
   try {
     const respuesta = await fetch("/api/libros");
     const datos = await respuesta.json();
+    console.log(datos);
     libros.value = datos;
   } catch (error) {
     console.error("Error al recuperar los datos:", error);
