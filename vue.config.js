@@ -5,7 +5,7 @@ module.exports = defineConfig({
     allowedHosts: "all",
     proxy: {
       "/api": {
-        target: process.env.VUE_APP_API_URL, // "http://cms:1337", // La URL de tu servidor Strapi
+        target: process.env.VUE_APP_STRAPI_URL,
         changeOrigin: true,
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         onProxyReq: (proxyReq, req, res) => {
@@ -15,6 +15,10 @@ module.exports = defineConfig({
             `Bearer ${process.env.VUE_APP_STRAPI_API_TOKEN}`
           );
         },
+      },
+      "/uploads": {
+        target: process.env.VUE_APP_STRAPI_URL,
+        changeOrigin: true,
       },
     },
   },
