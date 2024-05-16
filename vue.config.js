@@ -20,6 +20,10 @@ module.exports = defineConfig({
         target: process.env.VUE_APP_STRAPI_URL,
         changeOrigin: true,
       },
+      "/admin": {
+        target: process.env.VUE_APP_STRAPI_URL,
+        changeOrigin: true,
+      },
     },
   },
 });
