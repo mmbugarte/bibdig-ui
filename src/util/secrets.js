@@ -21,13 +21,13 @@ function getSecretsFromAWS() {
   const secretsManager = new AWS.SecretsManager({ region: "us-west-2" });
 
   secretsManager
-    .getSecretValue({ SecretId: "mmbu/strapi/api-key" })
+    .getSecretValue({ SecretId: `mmbu/ui/${process.env.NODE_ENV}` })
     .promise()
     .then((data) => {
       const secret = JSON.parse(data.SecretString);
       console.log({ secret });
 
-      module.exports.STRAPI_API_TOKEN = secret["mmbu-strapi-dev"];
+      module.exports.STRAPI_API_TOKEN = secret["strapi/api-key"];
     })
     .catch((err) => {
       console.error(err);

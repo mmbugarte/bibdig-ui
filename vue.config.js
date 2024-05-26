@@ -9,7 +9,6 @@ module.exports = defineConfig({
       "/api": {
         target: process.env.VUE_APP_STRAPI_URL,
         changeOrigin: true,
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         onProxyReq: (proxyReq, req, res) => {
           console.log(`API request proxied: ${req.method} ${req.path}`);
           proxyReq.setHeader(
