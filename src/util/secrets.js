@@ -1,21 +1,35 @@
-const AWS = require("aws-sdk");
+(function getSecrets() {
+  console.log(`Running in ${process.env.NODE_ENV} mode`);
+  switch (process.env.NODE_ENV) {
+    case "dev":
+      getSecretsFromEnv();
+      break;
+    case "test":
+    case "prod":
+      getSecretsFromAWS();
+  }
+})();
 
-// Configurar AWS SDK
-AWS.config.update({ region: process.env.AWS_REGION });
-const secretsManager = new AWS.SecretsManager({ region: "us-west-2" });
+function getSecretsFromEnv() {
+  module.exports.STRAPI_API_TOKEN = process.env.VUE_APP_STRAPI_API_TOKEN;
+}
 
-secretsManager
-  .getSecretValue({ SecretId: "mmbu/strapi/api-key" })
-  .promise()
-  .then((data) => {
-    const secret = data.SecretString;
-    console.log({
-      secret,
-      key: JSON.parse(secret)["mmbu-strapi-dev"],
+function getSecretsFromAWS() {
+  const AWS = require("aws-sdk");
+  AWS.config.update({ region: process.env.AWS_REGION });
+
+  const secretsManager = new AWS.SecretsManager({ region: "us-west-2" });
+
+  secretsManager
+    .getSecretValue({ SecretId: "mmbu/strapi/api-key" })
+    .promise()
+    .then((data) => {
+      const secret = JSON.parse(data.SecretString);
+      console.log({ secret });
+
+      module.exports.STRAPI_API_TOKEN = secret["mmbu-strapi-dev"];
+    })
+    .catch((err) => {
+      console.error(err);
     });
-    module.exports.STRAPI_API_TOKEN = JSON.parse(secret)["mmbu-strapi-dev"];
-    console.log(module.exports);
-  })
-  .catch((err) => {
-    console.error(err);
-  });
+}

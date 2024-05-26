@@ -1,5 +1,5 @@
 const { defineConfig } = require("@vue/cli-service");
-const { STRAPI_API_TOKEN } = require("./src/util/secrets");
+const secrets = require("./src/util/secrets");
 
 module.exports = defineConfig({
   transpileDependencies: true,
@@ -12,7 +12,10 @@ module.exports = defineConfig({
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         onProxyReq: (proxyReq, req, res) => {
           console.log(`API request proxied: ${req.method} ${req.path}`);
-          proxyReq.setHeader("Authorization", `Bearer ${STRAPI_API_TOKEN}`);
+          proxyReq.setHeader(
+            "Authorization",
+            `Bearer ${secrets.STRAPI_API_TOKEN}`
+          );
         },
       },
       "/uploads": {
