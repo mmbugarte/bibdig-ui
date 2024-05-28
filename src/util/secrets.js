@@ -25,7 +25,6 @@ function getSecretsFromAWS() {
     .promise()
     .then((data) => {
       const secret = JSON.parse(data.SecretString);
-      console.log({ secret });
 
       module.exports.STRAPI_API_TOKEN = secret["strapi/api-key"];
     })
